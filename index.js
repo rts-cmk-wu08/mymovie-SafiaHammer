@@ -22,26 +22,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     headerelm.innerHTML = `
+<div class = "phone_info">
 
+    <p>09:41</p>
+
+    <div class = "phone_icons">
+<i class="fa-solid fa-signal"></i>
+<i class="fa-solid fa-wifi"></i>
+<i class="fa-solid fa-battery-full"></i>
+</div>
+
+</div>
+
+
+<div class = top_info>
+<i class="fa-solid fa-bars"></i>
     <h1>MyMovies</h1>
-    <button class="toggle">switch</button>
+
+    <button class="toggle-btn">switch</button>
+
+</div>
+
+
 
      `
 
-    const button = headerelm.querySelector(".toggle");
-    button.addEventListener('click', () => {
-        function toggle() {
-            var element = document.body;
-            element.classList.toggle("dark-mode");
+    //FOOTER
+
+    footerelm.innerHTML = `
+
+<div class="footer_icons">
+<i class="fa-solid fa-tape"></i>
+<i class="fa-solid fa-ticket-simple"></i>
+<i class="fa-regular fa-bookmark"></i>
+</div>
+
+<div class="home_indicator"><hr></div>
+`
+
+
+
+    //variabel der henter knappen på klassenavn
+
+    const button = document.querySelector(".toggle-btn");
+
+
+
+    //et click event på den variable der lige er lavet
+
+    button.addEventListener("click", () => {
+
+        console.log("test");
+
+        //når du klikker på knappen kører det her if/else statement igennem
+
+        if (document.body.classList == "dark-mode") {
+
+            document.body.classList.remove("dark-mode");
+
+        } else {
+
+            document.body.classList.add("dark-mode");
+
         }
-    })
+
+    });
 
 
 
 
 
+    //Now playing
 
-    //now showing logic here!
+
+
 
     let popularelm = document.createElement("section")
     popularelm.classList.add("popular")
@@ -49,8 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let popularheader = document.createElement("header")
     popularheader.innerHTML = `
-<h2>popular</h2>
-<a href="#">Show more</a>
+<div class="movie_header"><h2>Now playing</h2>
+<a href="#">See more</a>
+</div>
 `
     popularelm.append(popularheader)
 
@@ -58,7 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
     popularmovies.classList.add("moviediv")
     popularelm.append(popularmovies)
 
-    fetch(`${baseURL}/movie/popular?api_key=${apikey}`)
+
+    fetch(`${baseURL}/movie/now_playing?api_key=${apikey}`)
         .then(response => response.json())
         .then(data => {
 
@@ -67,22 +123,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 article.classList.add("movie-article")
                 article.innerHTML = `
                 <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.tile} poster">
-                <div>
+                <div class="movie_info">
                     <h3>${movie.title}</h3>
-                    <p>${movie.vote_average}/10 IMdB</p>
-                    <p class="genres"></p>
+                    <p><i class="fa-solid fa-star"></i>${movie.vote_average}/10 IMdB</p>
+                
 
                 </div>
 
                 `
                 popularmovies.append(article)
-                let genreelm = article.querySelector(".genres")
-                movie.genre_ids.forEach(id => {
-                    let currentgenre = genres.find(genre => genre.id == id)
-                    let genrespan = document.createElement("span")
-                    genrespan.innerText = currentgenre.name
-                    genreelm.append(genrespan)
-                })
+
+
 
 
             })
@@ -91,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    //now showing logic here!
+    //Popular
 
     let nowelm = document.createElement("section")
     nowelm.classList.add("popular")
@@ -99,8 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let nowheader = document.createElement("header")
     nowheader.innerHTML = `
-<h2>now playing</h2>
-<a href="#">Show more</a>
+
+<div class="movie_header"><h2>Popular</h2>
+<a href="#">See more</a>
+    </div>
 `
     nowelm.append(nowheader)
 
@@ -108,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nowmovies.classList.add("nowmoviediv")
     nowelm.append(nowmovies)
 
-    fetch(`${baseURL}/movie/now_playing?api_key=${apikey}`)
+    fetch(`${baseURL}/movie/popular?api_key=${apikey}`)
         .then(response => response.json())
         .then(data => {
 
@@ -116,11 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 let article2 = document.createElement("article2")
                 article2.classList.add("movie-article")
                 article2.innerHTML = `
-                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.tile} poster">
-                <div>
+                <img class="img_column" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.tile} poster">
+                <div class="movie_info">
                     <h3>${movie.title}</h3>
-                    <p>${movie.vote_average}/10 IMdB</p>
-                    <p class="genres"></p>
+    
+                    <p><i class="fa-solid fa-star"></i>${movie.vote_average}/10 IMdB</p>
+                   <div class="genre_div"> <p class="genres"></p> </div>
 
                 </div>
 
